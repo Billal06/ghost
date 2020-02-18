@@ -1,4 +1,4 @@
-import sys,os,socket
+import sys,os,socket, time
 def banner():
         clear()
         print ("""\033[32;1m
@@ -35,6 +35,9 @@ def start_menu():
 	print ("\033[35;1m[2]. HAMMER \033[33;1m(DDOS TOOL)")
 	print ("\033[35;1m[3]. HULK \033[33;1m(DDOS TOOL)")
 	print ("\033[35;1m[4]. Scan IP \033[33;1m(INFOGA)")
+	print ("\033[35;1m[5]. Bypass DUIT CC \033[33;1m(BYPASS)")
+	print ("\033[35;1m[6]. Termux Key")
+	print ("\033[35;1m[6]. Home Termux ")
 	p = input("\033[37;1m [?] SELECT: \033[32;1m")
 	if p == "1" or p == "01":
 		ip = input("\033[37;1m [?] IP: \033[32;1m")
@@ -64,3 +67,35 @@ def start_menu():
 				print ("\033[31;1m[×] No Address with hostname");sys.exit()
 		else:
 			print ("\033[31;1m[×] Please input WEB");sys.exit()
+	elif p == "5" or p == "05":
+		url = input("\033[37;1m [?] URL: \033[32;1m")
+		if url:
+			run("python Tools/duitcc/duit.py "+url)
+		else:
+			print ("\033[31;1m[×] Please input URL");sys.exit()
+	elif p == "6" or p == "06":
+		print ("\033[32;1m[!] Remove Old")
+		time.sleep(3)
+		run("rm -rf $HOME/.termux/termux.properties")
+		print ("[√] Success")
+		time.sleep(1)
+		print ("[!] Add new key")
+		time.sleep(3)
+		try:
+			os.mkdir("$HOME/.termux")
+		except OSError: pass
+		data = """
+extra-keys = [['F6','{}','[]','<>','()','""',"''"],['ESC','/','-','HOME','UP','END','PGUP'],['TAB','CTRL','ALT','LEFT','DOWN','RIGHT','PGDN']]
+"""
+		o = open("/data/data/com.termux/files/home/.termux/termux.properties","w")
+		o.write(data)
+		o.close()
+		print ("[√] Success")
+		time.sleep(3)
+		y = input("[?] Exit? (Y/n): ")
+		if y in ["Y","y"]:
+			run("killall -9 com.termux")
+		else:
+			sys.exit("Thanks This Tool\033[0m")
+	elif p == "7" or p == "07":
+		run("python Tools/homemux/main.py")
